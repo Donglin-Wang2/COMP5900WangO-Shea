@@ -1,0 +1,113 @@
+./
+├── CIFAR100_comparison.ipynb
+├── CIFAR100_inception_gen.py
+├── CIFAR100_mobilnet_gen.py
+├── CIFAR100_resnet_gen.py
+├── CIFAR100_vgg_gen.py
+├── LFSD_inception_gen.py
+├── LFSD_mobilenet_gen.py
+├── LFSD_resnet_gen.py
+├── LFSD_vgg_gen.py
+├── __pycache__
+│   ├── vae_adapted.cpython-37.pyc
+│   ├── vae_injected.cpython-37.pyc
+│   └── vae_vanilla.cpython-37.pyc
+├── data
+│   ├── CIFAR100_inception_test.npy
+│   ├── CIFAR100_inception_test_feat.npy
+│   ├── CIFAR100_inception_train.npy
+│   ├── CIFAR100_inception_train_feat.npy
+│   ├── CIFAR100_vae_adapted_inception_encoding_train.npy
+│   ├── CIFAR100_vae_vanilla_encoding_train.npy
+│   ├── LFSD_depths_multi.npy
+│   ├── LFSD_depths_repeated.npy
+│   ├── LFSD_depths_repeated_inception_feat.npy
+│   ├── LFSD_imgs.npy
+│   ├── LFSD_imgs_inception_feat.npy
+│   ├── LFSD_labels.npy
+│   ├── LFSD_masks_single.npy
+│   └── cifar_encoding.npy
+├── data_processing.ipynb
+├── images
+│   ├── vae_adapted
+│   │   ├── 0.png
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   ├── 5.png
+│   │   ├── 6.png
+│   │   ├── 7.png
+│   │   ├── 8.png
+│   │   ├── 9.png
+│   │   ├── test_batch_0.png
+│   │   ├── test_batch_1.png
+│   │   ├── test_batch_2.png
+│   │   ├── test_batch_3.png
+│   │   └── test_batch_4.png
+│   ├── vae_injected
+│   │   ├── 0.png
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   ├── 5.png
+│   │   ├── 6.png
+│   │   ├── 7.png
+│   │   ├── 8.png
+│   │   ├── 9.png
+│   │   ├── test_batch_0.png
+│   │   ├── test_batch_1.png
+│   │   ├── test_batch_2.png
+│   │   ├── test_batch_3.png
+│   │   └── test_batch_4.png
+│   ├── vae_vanilla
+│   │   ├── 0.png
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   ├── 5.png
+│   │   ├── 6.png
+│   │   ├── 7.png
+│   │   ├── 8.png
+│   │   ├── 9.png
+│   │   ├── test_batch_0.png
+│   │   ├── test_batch_1.png
+│   │   ├── test_batch_2.png
+│   │   ├── test_batch_3.png
+│   │   └── test_batch_4.png
+│   └── vae_vanilla_old
+│       ├── 0.png
+│       ├── 1.png
+│       ├── 2.png
+│       ├── 3.png
+│       ├── 4.png
+│       ├── 5.png
+│       ├── 6.png
+│       ├── 7.png
+│       ├── 8.png
+│       └── 9.png
+├── results
+│   ├── vae_adapted
+│   │   ├── kl_loss.npy
+│   │   ├── loss.npy
+│   │   ├── reconstruction_loss.npy
+│   │   └── test_loss.npy
+│   ├── vae_injected
+│   │   ├── kl_loss.npy
+│   │   ├── loss.npy
+│   │   ├── reconstruction_loss.npy
+│   │   └── test_loss.npy
+│   └── vae_vanilla
+│       ├── kl_loss.npy
+│       ├── loss.npy
+│       ├── reconstruction_loss.npy
+│       └── test_loss.npy
+├── scratch_paper.py
+├── vae_adapted.ipynb
+├── vae_adapted.py
+├── vae_injected.ipynb
+├── vae_injected.py
+├── vae_vanilla.ipynb
+└── vae_vanilla.py
