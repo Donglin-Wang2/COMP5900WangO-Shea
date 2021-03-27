@@ -61,4 +61,5 @@ if __name__ == '__main__':
     depths = np.load('./data/LFSD_depths_repeated.npy')
     imgs = np.load('./data/LFSD_imgs.npy')
     for model_name in ['inception', 'vgg', 'resnet', 'mobilenet']:
+        print("Generating LFSD feature for %s" % model_name)
         gen_feat_with_model(model_name, imgs, depths)

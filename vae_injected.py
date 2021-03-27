@@ -68,20 +68,18 @@ class VAEInjected(keras.Model):
         eps = tf.random.normal(shape=mean.shape)
         return eps * tf.exp(logvar * .5) + mean
 
-    def encode(self, data, rand_img=False, rand_depth=False, batch_size=None):
+    def encode(self, data, rand_depth=False):
         img_batch, img_feat_batch, depth_batch, depth_feat_batch, mask_batch = data
-        batch_size = batch_size if batch_size else img_batch.shape[0]
-        img_x = tf.random.normal([batch_size, self.img_encoder.output.shape[1]]) if rand_img else self.img_encoder(img_batch)
-        depth_x = tf.random.normal([batch_size, self.depth_encoder.output.shape[1]]) if rand_depth else self.depth_encoder(depth_batch)
-        img_feat_batch = tf.random.normal([batch_size, self.img_encoder.output.shape[1]]) if rand_img else img_feat_batch
-        depth_feat_batch = tf.random.normal([batch_size, self.depth_encoder.output.shape[1]]) if rand_depth else depth_feat_batch
+        img_x = self.img_encoder(img_batch)
+        depth_x = tf.random.normal(img_x.shape) if rand_depth else self.depth_encoder(depth_batch)
+        depth_feat_batch = tf.random.normal(img_feat_batch.shape) if rand_depth else depth_feat_batch
         z = self.concat_layer([img_x, img_feat_batch, depth_x, depth_feat_batch])
         z_mean, z_log_var = self.fc_mean(z), self.fc_log_var(z)
         z = self.reparameterize(z_mean, z_log_var)
         return z, z_mean, z_log_var
 
-    def sample(self, data, rand_img=False, rand_depth=False, batch_size=None):
-        z, _, _ = self.encode(data, rand_img=rand_img, rand_depth=rand_depth, batch_size=batch_size)
+    def sample(self, data, rand_depth=False):
+        z, _, _ = self.encode(data, rand_depth=rand_depth)
         reconstruction = self.decoder(z)
         return reconstruction
 
