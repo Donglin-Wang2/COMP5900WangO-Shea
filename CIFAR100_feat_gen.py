@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import datasets
-from tensorflow.keras.applications import InceptionV3, VGG16, MobileNetV2, ResNet101
+from tensorflow.keras.applications import InceptionV3, VGG16, MobileNetV2, ResNet101, EfficientNetB1
 from tqdm import tqdm
 
 def gen_feat_with_model(model_name, train_images, test_images):
@@ -44,6 +44,15 @@ def gen_feat_with_model(model_name, train_images, test_images):
             input_shape=(32, 32, 3),
             pooling='max'
         )
+    elif model_name == 'efficientnet':
+        train_images = tf.keras.applications.efficientnet.preprocess_input(train_images)
+        test_images = tf.keras.applications.efficientnet.preprocess_input(test_images)
+        model = EfficientNetB1(
+            include_top=False,
+            weights="imagenet",
+            input_shape=(32, 32, 3),
+            pooling='max'
+        )
     else:
         print('Invalid model name')
         return
@@ -53,17 +62,17 @@ def gen_feat_with_model(model_name, train_images, test_images):
     for i in tqdm(range(500, len(train_images), 500)):
         train_results = np.concatenate((train_results, model(train_images[i:i+500]).numpy()), axis=0)
     print(train_results.shape)
-    np.save('./data/CIFAR100_inception_train_feat', train_results)
+    np.save('./data/CIFAR100_%s_train_feat' % model_name, train_results)
 
     test_results = model(test_images[:500])
     for i in tqdm(range(500, len(test_images), 500)):
         test_results = np.concatenate((test_results, model(test_images[i:i+500]).numpy()), axis=0)
     print(test_results.shape)
-    np.save('./data/CIFAR100_inception_test_feat', test_results)
+    np.save('./data/CIFAR100_%s_test_feat' % model_name, test_results)
 
 if __name__ == '__main__':
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar100.load_data()
-    for model_name in ['inception', 'vgg', 'resnet', 'mobilenet']:
+    for model_name in ['inception', 'resnet', 'mobilenet', 'efficientnet']:
         print("Starting with model %s" % model_name)
         gen_feat_with_model(model_name, train_images, test_images)
         print("Done with model %s" % model_name)
