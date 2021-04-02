@@ -67,8 +67,11 @@ def gen_feat_with_model(model_name, imgs, depths):
     print('Done')
 
 if __name__ == '__main__':
-    depths = np.load('./data/LFSD_depths_repeated.npy')
-    imgs = np.load('./data/LFSD_imgs.npy')
-    for model_name in ['inception', 'resnet', 'mobilenet', 'efficientnet']:
+    print(f"gpu: { len(tf.config.list_physical_devices('GPU')) }")
+    gpus = tf.config.experimental.list_physical_devices('GPU')
+    for gpu in gpus: tf.config.experimental.set_memory_growth(gpu, True)
+    depths = np.load('./data/LFSD_depths_repeated.npy') * 255
+    imgs = np.load('./data/LFSD_imgs.npy') * 255
+    for model_name in ['inception', 'resnet', 'mobilenet', 'efficientnet', 'vgg']:
         print("Generating LFSD feature for %s" % model_name)
         gen_feat_with_model(model_name, imgs, depths)

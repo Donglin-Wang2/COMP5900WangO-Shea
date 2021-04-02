@@ -71,8 +71,11 @@ def gen_feat_with_model(model_name, train_images, test_images):
     np.save('./data/CIFAR100_%s_test_feat' % model_name, test_results)
 
 if __name__ == '__main__':
+    print(f"gpu: { len(tf.config.list_physical_devices('GPU')) }")
+    gpus = tf.config.experimental.list_physical_devices('GPU')
+    for gpu in gpus: tf.config.experimental.set_memory_growth(gpu, True)
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar100.load_data()
-    for model_name in ['inception', 'resnet', 'mobilenet', 'efficientnet']:
+    for model_name in ['efficientnet', 'inception', 'resnet', 'mobilenet', 'vgg']:
         print("Starting with model %s" % model_name)
         gen_feat_with_model(model_name, train_images, test_images)
         print("Done with model %s" % model_name)
