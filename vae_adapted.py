@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.applications import InceptionV3
-from tensorflow.keras.layers import Conv2D, Flatten, Dense, Conv2DTranspose, Reshape, Layer
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, Conv2DTranspose, Reshape, Layer, LeakyReLU
 import tensorflow.keras.layers as layers
 class VAEAdapted(keras.Model):
     
@@ -11,12 +11,16 @@ class VAEAdapted(keras.Model):
         self.concat_layer = layers.Concatenate(axis=-1)
         self.fc_log_var = tf.keras.Sequential([
             layers.Dense(latent_dim),
+            LeakyReLU()
             layers.Dense(latent_dim),
+            LeakyReLU()
             layers.Dense(latent_dim)
         ])
         self.fc_mean = tf.keras.Sequential([
             layers.Dense(latent_dim),
+            LeakyReLU()
             layers.Dense(latent_dim),
+            LeakyReLU()
             layers.Dense(latent_dim)
         ])
        
