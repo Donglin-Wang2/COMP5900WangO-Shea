@@ -15,6 +15,7 @@
 
 2. Make sure that you create three empty folders titled ./results, ./data, and ./images. 
 3. Maks sure that ./vae_vanilla, ./vae_adapted, ./vae_injected are under both the ./images and ./results folder. Afterward, you should have the ./images and ./results folder should look like this:
+
         ```
         images
         ├── vae_adapted
@@ -25,6 +26,7 @@
         ├── vae_injected
         └── vae_vanilla
         ```
+        
 4. Run data_processing.py
 5. Run LFSD_feat_gen.py
 6. Run CIFAR100_feat_gen.py
