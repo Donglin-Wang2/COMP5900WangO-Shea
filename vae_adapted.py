@@ -7,20 +7,19 @@ class VAEAdapted(keras.Model):
     
     def __init__(self, latent_dim, **kwargs):
         super(VAEAdapted, self).__init__(**kwargs)
-
         self.concat_layer = layers.Concatenate(axis=-1)
         self.fc_log_var = tf.keras.Sequential([
             layers.Dense(latent_dim),
-            LeakyReLU()
+            LeakyReLU(),
             layers.Dense(latent_dim),
-            LeakyReLU()
+            LeakyReLU(),
             layers.Dense(latent_dim)
         ])
         self.fc_mean = tf.keras.Sequential([
             layers.Dense(latent_dim),
-            LeakyReLU()
+            LeakyReLU(),
             layers.Dense(latent_dim),
-            LeakyReLU()
+            LeakyReLU(),
             layers.Dense(latent_dim)
         ])
        
@@ -34,13 +33,11 @@ class VAEAdapted(keras.Model):
             layers.Conv2DTranspose(16, 3, strides=2, padding="same"),
             layers.Conv2DTranspose(1, 3, activation='sigmoid', strides=2, padding="same"),
         ])
-
         self.total_loss_tracker = keras.metrics.Mean(name="total_loss")
         self.reconstruction_loss_tracker = keras.metrics.Mean(
             name="reconstruction_loss"
         )
         self.kl_loss_tracker = keras.metrics.Mean(name="kl_loss")
-
     @property
     def metrics(self):
         return [
@@ -48,23 +45,19 @@ class VAEAdapted(keras.Model):
             self.reconstruction_loss_tracker,
             self.kl_loss_tracker,
         ]
-
     def reparameterize(self, mean, logvar):
         eps = tf.random.normal(shape=mean.shape)
         return eps * tf.exp(logvar * .5) + mean
-
     def encode(self, img_batch, depth_batch):
         z = self.concat_layer([img_batch, depth_batch])
         z_mean, z_log_var = self.fc_mean(z), self.fc_log_var(z)
         z = self.reparameterize(z_mean, z_log_var)
         return z, z_mean, z_log_var
-
     def sample(self, data):
         img_batch, depth_batch, _ = data
         z, z_mean, z_log_var = self.encode(img_batch, depth_batch)
         reconstruction = self.decoder(z)
         return reconstruction
-
     def train_step(self, data):
         img_batch, depth_batch, mask_batch = data
         with tf.GradientTape() as tape:
